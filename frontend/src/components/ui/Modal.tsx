@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useId, useRef } from "react";
 
 interface ModalProps {
   open: boolean;
@@ -12,6 +12,7 @@ interface ModalProps {
 }
 
 export function Modal({ open, onClose, title, children, className, bodyClassName }: ModalProps) {
+  const titleId = useId();
   const dialogRef = useRef<HTMLDialogElement>(null);
   // Hold the latest onClose in a ref so the native 'cancel' listener below can
   // be installed once and still call the current callback on every invocation.
@@ -45,10 +46,10 @@ export function Modal({ open, onClose, title, children, className, bodyClassName
     <dialog
       ref={dialogRef}
       className={`m-auto rounded-lg shadow-xl border border-gray-200 p-0 backdrop:bg-black/40 w-full ${className ?? "max-w-lg"}`}
-      aria-labelledby="modal-title"
+      aria-labelledby={titleId}
     >
       <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">
-        <h2 id="modal-title" className="text-lg font-semibold text-gray-900">
+        <h2 id={titleId} className="text-lg font-semibold text-gray-900">
           {title}
         </h2>
         <button

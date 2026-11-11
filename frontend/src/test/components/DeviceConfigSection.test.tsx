@@ -237,10 +237,7 @@ describe("DeviceConfigSection", () => {
       renderWithProviders(<DeviceConfigSection deviceId={DEVICE_ID} />);
       await screen.findByText("v1");
       await user.click(screen.getByRole("button", { name: "Apply" }));
-      // Every Modal titles itself through id="modal-title", so the section's
-      // several modals share one id; find the dialog through its heading.
-      const heading = await screen.findByRole("heading", { name: "Apply config to device" });
-      const dialog = heading.closest("dialog") as HTMLElement;
+      const dialog = await screen.findByRole("dialog", { name: "Apply config to device" });
       return { user, dialog };
     }
 
@@ -250,8 +247,7 @@ describe("DeviceConfigSection", () => {
       await screen.findByText("v1");
       const row = screen.getByText("v1").closest("tr") as HTMLElement;
       await user.click(within(row).getByRole("button", { name: "Restore" }));
-      const heading = await screen.findByRole("heading", { name: "Restore this version?" });
-      const dialog = heading.closest("dialog") as HTMLElement;
+      const dialog = await screen.findByRole("dialog", { name: "Restore this version?" });
       await user.click(within(dialog).getByRole("button", { name: "Restore" }));
     }
 
